@@ -1,46 +1,91 @@
-#define X_STEP_PIN         54
-#define X_DIR_PIN          55
-#define X_ENABLE_PIN       38
+// 1/4 resolution
+// 800 seteps per revolution
+// 0.45 degrees per step
 
-#define Y_STEP_PIN         60
-#define Y_DIR_PIN          61
-#define Y_ENABLE_PIN       56
+#define liftStepPin         22
+#define liftDirPin          24
+#define liftEnablePin       26
 
-#define Z_STEP_PIN         46
-#define Z_DIR_PIN          48
-#define Z_ENABLE_PIN       62
+#define sweepStepPin        23
+#define sweepDirPin         25
+#define sweepEnablePin      27
 
-#define E_STEP_PIN         26
-#define E_DIR_PIN          28
-#define E_ENABLE_PIN       24
-
-#define SDPOWER            -1
-#define SDSS               53
-#define LED_PIN            13
-
-#define FAN_PIN            9
-
-#define PS_ON_PIN          12
-#define KILL_PIN           -1
-
-#define HEATER_0_PIN       10
-#define HEATER_1_PIN       8
-#define TEMP_0_PIN          13   // ANALOG NUMBERING
-#define TEMP_1_PIN          14   // ANALOG NUMBERING
-
-#define GPIO_A             3
-#define GPIO_B             2
-#define GPIO_C             14
-#define GPIO_D             15
-#define GPIO_E             18
-#define GPIO_F             19
+#define wristStepPin        28
+#define wristDirPin         30
+#define wirstEnablePin      32
 
 void setup() {
-    pinMode(HEATER_0_PIN, OUTPUT);
 
 }
 
 void loop() {
-  digitalWrite(HEATER_0_PIN, HIGH);
 
+}
+
+void motorTurn(int degrees, int degPerSec, String motor){
+    int absDegrees = abs(degrees);
+
+    int steps = degreesToSteps(absDegrees);
+    int delay = speedToDelay(degPerSec);
+    
+    switch (motor) {
+      case lift:
+        if(degrees>1){
+            digitalWrite(liftDirPin, HIGH)
+        }
+        else if(degrees<1){
+            digitalWrite(liftDirPin, LOW)
+        }
+
+        for(int i = 0; i<steps; i++){
+            digitalWrite(liftStepPin, HIGH);
+            delayMicroseconds(delay);
+            digitalWrite(liftStepPin, LOW);
+            delayMicroseconds(delay);
+        }
+      break;
+      case sweep:
+        if(degrees>1){
+            digitalWrite(sweepDirPin, HIGH)
+        }
+        else if(degrees<1){
+            digitalWrite(sweepDirPin, LOW)
+        }
+
+        for(int i = 0; i<steps; i++){
+            digitalWrite(sweepStepPin, HIGH);
+            delayMicroseconds(delay);
+            digitalWrite(sweepStepPin, LOW);
+            delayMicroseconds(delay);
+        }
+      break;
+      case wrist:
+        if(degrees>1){
+            digitalWrite(wristDirPin, HIGH)
+        }
+        else if(degrees<1){
+            digitalWrite(wristDirPin, LOW)
+        }
+
+        for(int i = 0; i<steps; i++){
+            digitalWrite(wristStepPin, HIGH);
+            delayMicroseconds(delay);
+            digitalWrite(wristStepPin, LOW);
+            delayMicroseconds(delay);
+        }
+      break;
+      default: break;
+    }   
+}
+
+int degreesToSteps(int degrees){
+    int steps = degrees/0.45;
+    return(steps);
+}
+
+int speedToDelay(int degPerSec){
+    int stepsPerSec = degreesToSteps(degPerSec);
+    int mSecPerStep = (1/stepsPerSec)*1000000/2;
+    
+    return(mSecPerStep);
 }
