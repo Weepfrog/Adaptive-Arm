@@ -4,8 +4,8 @@
 // Mode 0 - Pour
 // Mode 1 - Stir
 
-#include wire.h
-#include LiquidCrystal_I2C.h
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
 #define liftStepPin         22
 #define liftDirPin          24
@@ -38,7 +38,8 @@ void setup() {
 }
 
 void loop() {
-    switch(checkButtonPress){
+    int pressedButton = checkButtonPress;
+    switch(pressedButton){
         case 1: // userButton
             if(globalSelectedMode = 0){
                 
@@ -69,9 +70,7 @@ void motorTurn(int degrees, int degPerSec, String motor){
 
     int steps = degreesToSteps(absDegrees);
     int delay = speedToDelay(degPerSec);
-    
-    switch (motor) {
-      case "LIFT":
+    if (motor == "LIFT"){
         if(degrees>1){
             digitalWrite(liftDirPin, HIGH);
         }
@@ -85,8 +84,8 @@ void motorTurn(int degrees, int degPerSec, String motor){
             digitalWrite(liftStepPin, LOW);
             delayMicroseconds(delay);
         }
-      break;
-      case "SWEEP":
+      }
+      if (motor == "SWEEP"){
         if(degrees>1){
             digitalWrite(sweepDirPin, HIGH);
         }
@@ -100,8 +99,8 @@ void motorTurn(int degrees, int degPerSec, String motor){
             digitalWrite(sweepStepPin, LOW);
             delayMicroseconds(delay);
         }
-      break;
-      case "WRIST":
+      }
+      if (motor == "WRIST"){
         if(degrees>1){
             digitalWrite(wristDirPin, HIGH);
         }
@@ -115,9 +114,7 @@ void motorTurn(int degrees, int degPerSec, String motor){
             digitalWrite(wristStepPin, LOW);
             delayMicroseconds(delay);
         }
-      break;
-      default: break;
-    }   
+      }   
 }
 
 int degreesToSteps(int degrees){
@@ -161,24 +158,24 @@ void viewModeChange(){
 }
 
 void modeOutput(){
-    if(globalViewMode = 0 && globalSelectedMode = globalViewMode){
+    if(globalViewMode = 0 && globalSelectedMode == globalViewMode){
         lcd.setCursor(0,0);
-        lcd.print(“Pouring”);
+        lcd.print("Pouring");
         lcd.setCursor(0,1);
-        lcd.print(“Selected”);
+        lcd.print("Selected");
     }
-    else if(globalViewMode = 1 && globalSelectedMode = globalViewMode){
+    else if(globalViewMode = 1 && globalSelectedMode == globalViewMode){
         lcd.setCursor(0,0);
-        lcd.print(“Stiring”);
+        lcd.print("Stiring");
         lcd.setCursor(0,1);
-        lcd.print(“Selected”);
+        lcd.print("Selected");
     }
     else if(globalViewMode = 0 && globalSelectedMode != globalViewMode){
         lcd.setCursor(0,0);
-        lcd.print(“Pouring”);
+        lcd.print("Pouring");
     }
     else if(globalViewMode = 1 && globalSelectedMode != globalSelectedMode){
         lcd.setCursor(0,0);
-        lcd.print(“Stiring”);
+        lcd.print("Stiring");
     }
 }
