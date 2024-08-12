@@ -42,10 +42,10 @@ void loop() {
     switch(pressedButton){
         case 1: // userButton
             if(globalSelectedMode = 0){
-                
+                pickAndPour();
             }
             else if (globalSelectedMode = 1){
-
+                pickAndPour();
             }
         break;
 
@@ -62,6 +62,20 @@ void loop() {
         default: break;
     }
 
+}
+
+void pickAndPour(){
+    motorTurn(heightToDegrees(15), 1440, "LIFT");
+    motorTurn(20, 2, "SWEEP");
+    motorTurn(100, 20, "WRIST");
+    
+    motorTurn(-100, 20, "WRIST");
+    motorTurn(-20, 2, "SWEEP");
+    motorTurn(heightToDegrees(-15), 1440, "LIFT");
+}
+
+int heightToDegrees(int height){
+    return height*4*360;
 }
 
 //make into smaller functions
