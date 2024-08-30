@@ -1,1 +1,16 @@
-we have many issues with our code. The robot arms main obective was to have 2 main modes, one to move from one position to another and then pour the liquid in the end effector and one the moves the arm back and forth to stirr stuff with a wisk. The lcd was used to display what mode the arm was currently in and the two buttons are used to cycle through the modes and then select a mode. once a mode has been selected there is a button imput using a headphone imput jack that allows paitents to hook their buttons up to it to activate the command. The arm also has two buttons that should have a zeroing function that should activate when the arm gets turned on. Unfourtunately we have had issues with flashing the arduino and ran out of time. I leave this here in hopes that somone will come to finish this project. Thanks :C:
+Project summary:
+    The robot arms main obective was to have 2 main modes:
+        1. move from one position to another and then pour the ingridents in a bowl
+        2. moves the arm back and forth to stirr ingridents in the bowl with a wisk
+
+Usage Summary:
+    1. The lcd was used to display what mode the arm was currently in and the two buttons are used to cycle through the modes and then select a mode. 
+    2. Once a mode has been selected there is a button imput using a TRS imput jack to allow the use of standard adaptive buttons to activate the command.
+    3. The arm also has two buttons that should have a zeroing function that should activate when the arm gets turned on. 
+ 
+
+Issues with the project are as follows:
+    Necisary for basic function:
+        1. Fix the code so that when the user button is pressed an action occurs
+    Reach goals for fix:
+        1. Intigreate the LCD and mode control buttons to allow for the use of differnt modes

@@ -41,19 +41,16 @@ void setup() {
     //set default mode
     globalSelectedMode = globalViewMode;
     modeOutput();
-    // for(int i = 0; i != 1; i = 0){
-    //   lcd.setCursor(0,0);
-    //   lcd.print(digitalRead(liftLimitPin));
-    // };
+    
     //reset arm to limits
-    //reset sweep
-    //for(int i = 0; i != 1; i = digitalRead(sweepLimitPin)){
-    //    motorTurn(-200, 20, "SWEEP");
-    //}
     //reset height
-    Serial.println("printing");
-    pour();
-    Serial.println("purned");
+    for(int i = 0; i != 1; i = digitalRead(sweepLimitPin)){
+        motorTurn(-200, 20, "LIFT");
+    }
+    //reset sweep
+    for(int i = 0; i != 1; i = digitalRead(sweepLimitPin)){
+        motorTurn(-200, 20, "SWEEP");
+    }
 }
 
 void loop() {        
@@ -105,15 +102,9 @@ int checkButtonPress(){
 void pour(){
     // move and pour cup
     motorTurn(20, 1440, "LIFT");
-    Serial.print("Doing height");
-    delay(100000);
-
     motorTurn(5, 2, "SWEEP");
-   Serial.print("Doing Sweep");
     motorTurn(100, 20, "WRIST");
-   Serial.print("Doing Wrist");
 
-    
     // reset cup position
     motorTurn(-100, 20, "WRIST");
     motorTurn(-20, 2, "SWEEP");
